@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+    
+    <head>
+        <title>Transactions | Mideo Accounting</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <style>
+            body {
+                padding-top: 60px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="navbar navbar-fixed-top navbar-inverse">
+                <div class="navbar-inner">
+                    <div class="pull-right">
+                        <a href="https://themideo.com" class="brand">Mideo Accounting</a>
+                    </div>
+                </div>
+            </div>
+            <div class="page-header"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        <p class="text-center">Payment Voucher</p>
+                    </h1>
+                    <form role="form" class="form-horizontal" id="payment-voucher-form">
+                        <div class="form-group">
+                            <label for="pay" class="col-md-1">Pay</label>
+                            <div class="col-md-3">
+                                <input type="text" id="pay" class="form-control" placeholder="Name">
+                            </div>
+                            <label for="pay" class="col-md-1 col-md-offset-5">Id</label>
+                            <div class="col-md-2">
+                                <input type="text" id="voucher-id" class="form-control" placeholder="Voucher Id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transaction-input"></tbody>
+                                </table>
+                                <p>
+                                    <button type="button" class="btn btn-default" id="add-transaction">More transaction</button>
+                                    <button type="button" class="btn btn-success"
+                                    id="add-transaction-done">Submit</button>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        <p class="text-center">Transactions</p>
+                    </h1>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Category</th>
+                                <th>Payment Voucher</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src="js/lib/jquery.js"></script>
+        <script src="js/lib/underscore.js"></script>
+        <script src="js/lib/backbone.js"></script>
+        <script src="js/lib/backbone-localstorage.js"></script>
+        <script src="js/bootstrap.js"></script>
+        
+        <script type="text/template" id="transaction-template">
+            <td data-id="<%= id %>"><%= description %></td>
+            <td><%= amount %></td>
+            <td><%= category %></td>
+            <td><%= paymentVoucher %></td>
+            <td>
+                <span class="btn glyphicon glyphicon-edit js-edit"></span>
+                <span class="btn glyphicon glyphicon-trash js-delete"></span>
+            </td>
+        </script>
+        <script type="text/template" id="transaction-edit-template">
+           <td><input type="text" class="form-control" name="description" value="<%= description %>"></td>
+           <td><input type="text" class="form-control" name="amount" value="<%= amount %>"></td>
+           <td>
+               <select class="form-control" name="category">
+               <% var categories = ['ค่าเดินทาง', 'ค่าสิ่งพิมพ์']; %>
+               <% _.each(categories, function (cat) { %>
+                   <option <% if(cat === category) { %>selected="selected"<% } %>><%= cat %></option>
+                <% }); %>on>
+               </select>
+           </td>
+           <td><input type="text" class="form-control" name="paymentVoucher" value="<%= paymentVoucher %>"></td>
+           <td>
+               <span class="btn glyphicon glyphicon-check js-save"></span> 
+               <span class="btn glyphicon glyphicon-ban-circle js-cancel"></span>
+           </td>
+        </script>
+        
+        <script src="js/backbone/model/transaction.js"></script>
+        <script src="js/backbone/collection/transactions.js"></script>
+        <script src="js/backbone/view/transactionItem.js"></script>
+        <script src="js/backbone/view/transactionList.js"></script>
+        <script src="js/backbone/controller/app.js"></script>
+    </body>
+
+</html>
