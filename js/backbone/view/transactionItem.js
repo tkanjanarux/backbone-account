@@ -16,7 +16,7 @@
         
         initialize: function () {
             this.listenTo(this.model, 'destroy', this.remove);
-            this.listenTo(this.model, 'save change', this.render);
+            this.listenTo(this.model, 'sync change', this.render);
         },
         
         editItem: function () {
@@ -40,11 +40,7 @@
         },
         
         saveItem: function () {
-            this.model.save(this._getAttributes(), {
-                success: function () {
-                    this.render();
-                }.bind(this)
-            });
+            this.model.save(this._getAttributes());
         },
         
         render: function () {
