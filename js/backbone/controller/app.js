@@ -86,4 +86,10 @@ $(function() {
     
     window.mideoAccount = new MideoAccount();
     window.mideoAccount.start();
+    
+    $('.nav a').on('click', function(){
+        if ($(this).parent().find('li').length === 0) {
+            $(".navbar-toggle").click();
+        }
+    });
 });
