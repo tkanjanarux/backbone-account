@@ -6,7 +6,10 @@ $(function() {
         var categories= this._categories = new app.Categories();
         var transactionList = new app.TransactionList({collection: transactions});
         
-        var paymentVoucher = new app.PaymentVoucher();
+        var paymentVouchers = this.paymentVouchers = new app.PaymentVouchers();
+        var paymentVoucherList = new app.PaymentVoucherList({collection: paymentVouchers});
+        
+        var addPaymentVoucher = new app.AddPaymentVoucher();
         
         var $container = $('#container');
         var $nav = $('nav');
@@ -15,7 +18,7 @@ $(function() {
         
         this.categories =  categories.map(function (cat) {
             return cat.get('name');
-        })
+        });
         
         this.start = function () {
             Backbone.history.start();
@@ -25,7 +28,7 @@ $(function() {
         
         this.updateActiveNav = function () {
             $nav.find('li').removeClass('active');
-            var $li = $nav.find('a[href*=' + Backbone.history.fragment + ']').parent();
+            var $li = $nav.find('a[href*="' + Backbone.history.fragment + '"]').parent();
             $li.addClass('active');
         };
         
@@ -36,7 +39,13 @@ $(function() {
         };
         
         this.showVoucherView = function () {
-            this.showView(paymentVoucher);
+            this.showView(addPaymentVoucher);
+        };
+        
+        this.showPaymentVoucherView = function () {
+            paymentVouchers.fetch({silent:true});
+            
+            this.showView(paymentVoucherList);
         };
         
         this.showView = function (view) {
@@ -55,8 +64,16 @@ $(function() {
         this.addTransactions = function (paymentTransactions) {
             paymentTransactions.forEach(function (transaction) {
                 transactions.create(transaction);
-            })
-        }
+            });
+        };
+        
+        this.addPaymentVoucher = function (data) {
+            this.addTransactions(data.transactions);
+            paymentVouchers.create({
+                pay: data.pay,
+                voucherId: data.voucherId
+            });
+        };
     }
     
     window.mideoAccount = new MideoAccount();

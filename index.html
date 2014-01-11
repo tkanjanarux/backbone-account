@@ -21,7 +21,10 @@
             <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                 <ul class="nav navbar-nav" id="nav">
                     <li>
-                        <a href="#/paymentvoucher">Payment Voucher</a>
+                        <a href="#/paymentvoucher/list">Payment Voucher</a>
+                    </li>
+                    <li>
+                        <a href="#/paymentvoucher/add">Add Payment Voucher</a>
                     </li>
                     <li>
                         <a href="#/transaction">Transaction</a>
@@ -84,7 +87,7 @@
                <span class="btn glyphicon glyphicon-ban-circle js-cancel"></span>
            </td>
         </script>
-        <script type="text/template" id="payment-voucher-manager-template">
+        <script type="text/template" id="add-payment-voucher-template">
             <h1>
                 <p class="text-center">Payment Voucher</p>
             </h1>
@@ -137,13 +140,41 @@
                 </td>
             </tr>
         </script>
+        <script type="text/template" id="payment-voucher-manager-template">
+            <h1>
+                <p class="text-center">Payment Voucher</p>
+            </h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Voucher Id</th>
+                        <th>Pay to</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="payment-voucher-list"></tbody>
+            </table>
+        </script>
+        <script type="text/template" id="payment-voucher-template">
+            <td><%= voucherId %></td>
+            <td><%= pay %></td>
+            <td></td>
+            <td>
+                <span class="btn glyphicon glyphicon-edit js-edit"></span>
+                <span class="btn glyphicon glyphicon-trash js-delete"></span>
+            </td>
+        </script>
         
         <script src="js/backbone/model/transaction.js"></script>
         <script src="js/backbone/collection/transactions.js"></script>
         <script src="js/backbone/collection/categories.js"></script>
+        <script src="js/backbone/collection/paymentVouchers.js"></script>
         <script src="js/backbone/view/transactionItem.js"></script>
         <script src="js/backbone/view/transactionList.js"></script>
         <script src="js/backbone/view/paymentVoucher.js"></script>
+        <script src="js/backbone/view/paymentVoucherItem.js"></script>
+        <script src="js/backbone/view/paymentVoucherList.js"></script>
         <script src="js/backbone/router/router.js"></script>
         <script src="js/backbone/controller/app.js"></script>
     </body>
