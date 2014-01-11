@@ -30,6 +30,7 @@ $(function() {
             $nav.find('li').removeClass('active');
             var $li = $nav.find('a[href*="' + Backbone.history.fragment + '"]').parent();
             $li.addClass('active');
+            $li.parents('li').addClass('active');
         };
         
         this.showTransactionView = function () {
@@ -43,6 +44,7 @@ $(function() {
         };
         
         this.showPaymentVoucherView = function () {
+            transactions.fetch({silent:true});
             paymentVouchers.fetch({silent:true});
             
             this.showView(paymentVoucherList);
@@ -73,6 +75,12 @@ $(function() {
                 pay: data.pay,
                 voucherId: data.voucherId
             });
+        };
+        
+        this.getPaymentVoucherAmount = function (voucherId) {
+            return transactions.getByVoucher(voucherId).reduce(function (sum, transaction) {
+                return sum + +transaction.get('amount');
+            }, 0);
         };
     }
     

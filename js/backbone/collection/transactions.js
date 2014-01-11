@@ -3,7 +3,13 @@
     var Transactions = Backbone.Collection.extend({
        model: app.Transaction,
        
-       localStorage: new Backbone.LocalStorage('transactions-bakcbone')
+       localStorage: new Backbone.LocalStorage('transactions-bakcbone'),
+       
+       getByVoucher: function (voucherId) {
+           return this.filter(function (transaction) {
+               return transaction.get('paymentVoucher') === voucherId;
+           });
+       }
     });
     
     window.app = window.app || {};

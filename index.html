@@ -15,16 +15,27 @@
     
     <body>
         <header class="navbar navbar-fixed-top navbar-inverse">
-            <div class="pull-right">
-                <a href="https://themideo.com" class="navbar-brand">Mideo Accounting</a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Mideo</a>
             </div>
-            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" id="nav">
-                    <li>
-                        <a href="#/paymentvoucher/list">Payment Voucher</a>
-                    </li>
-                    <li>
-                        <a href="#/paymentvoucher/add">Add Payment Voucher</a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Payment Voucher</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#/paymentvoucher/list">List Payment Voucher</a>
+                            </li>
+                            <li>
+                                <a href="#/paymentvoucher/add">Add Payment Voucher</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#/transaction">Transaction</a>
@@ -159,7 +170,7 @@
         <script type="text/template" id="payment-voucher-template">
             <td><%= voucherId %></td>
             <td><%= pay %></td>
-            <td></td>
+            <td><%= amount %></td>
             <td>
                 <span class="btn glyphicon glyphicon-edit js-edit"></span>
                 <span class="btn glyphicon glyphicon-trash js-delete"></span>
