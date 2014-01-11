@@ -1,27 +1,40 @@
 /* global Backbone _ $ app */
 (function (window) {
     var TransactionList = Backbone.View.extend({
-        el: '#transaction-list',
+        className: 'col-md-12',
+        //el: '#transaction-list',
+        template: _.template($('#transaction-manager-template').html()),
         
         initialize: function () {
             this.listenTo(this.collection, 'reset', this.addAll);
-            this.listenTo(this.collection, 'add', this.addWhenSync);
-        },
-        
-        addWhenSync: function (transaction) {
-            this.listenTo(this.collection, 'sync', this.addOne);
         },
         
         addOne: function (transaction) {
             var view = new app.TransactionItem({model: transaction});
-            this.$el.append(view.render().el);
-            this.stopListening(this.collection, 'sync', this.addOne);
+            this.childrenView.push(view);
+            this.$list.append(view.render().el);
         },
         
         addAll: function () {
-            this.$el.html('');
+            this.childrenView.length = 0;
+            this.$list.html('');
             this.collection.each(this.addOne, this);
-        }
+        },
+        
+        render: function () {
+            this.$el.html(this.template());
+            this.$list = this.$('#transaction-list');
+            this.addAll();
+            return this;
+        },
+        
+        close: function () {
+            _.each(this.childrenView, function (view) {
+                view.remove();
+            });
+        },
+        
+        childrenView: []
     });
     
     window.app = window.app || {};
